@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificado de Participación - Edición 2</title>
+    <style>
+        /* ESTILOS ELEGANTES - BASADO EN TU PDF */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+
+        /* --- PANTALLA DE INGRESO --- */
+        .login-screen {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            border-top: 8px solid #b8860b;
+        }
+        .login-screen h1 {
+            font-family: 'Playfair Display', serif;
+            color: #1a2a3a;
+            font-size: 34px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .login-screen p {
+            color: #4a4a4a;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .login-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #1a2a3a;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .login-input:focus {
+            border-color: #b8860b;
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+        }
+        .login-button {
+            background: #b8860b;
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        .login-button:hover {
+            background: #9e7008;
+        }
+        .error-message {
+            color: #c0392b;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            font-weight: 500;
+        }
+
+        /* --- CONTENEDOR DEL CERTIFICADO (TAMAÑO CARTA EXACTO) --- */
+        .certificado-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            margin: 5px auto 20px auto;  /* Margen inferior aumentado para separar de botones */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            display: none;
+            background: #ffffff;
+            position: relative;
+        }
+
+        /* --- DISEÑO DEL CERTIFICADO - ESTILO ELEGANTE --- */
+        .certificado {
+            width: 100%;
+            height: 29.7cm;
+            background: #fffcf5;
+            padding: 1.5cm 2cm 1.2cm 2cm;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 0px solid #e5d9c6;
+            box-shadow: inset 0 0 30px rgba(184, 134, 11, 0.05);
+        }
+
+        /* --- BORDE DECORATIVO DORADO (COMO EL PDF) --- */
+        .certificado::before {
+            content: "";
+            position: absolute;
+            top: 0.8cm;
+            left: 0.8cm;
+            right: 0.8cm;
+            bottom: 0.8cm;
+            border: 1px solid #b8860b;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* --- ESQUINAS DORADAS SUTILES --- */
+        .esquina {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #b8860b;
+            opacity: 0.3;
+            z-index: 5;
+        }
+        .esquina-tl { top: 1cm; left: 1cm; border-right: none; border-bottom: none; }
+        .esquina-tr { top: 1cm; right: 1cm; border-left: none; border-bottom: none; }
+        .esquina-bl { bottom: 1cm; left: 1cm; border-right: none; border-top: none; }
+        .esquina-br { bottom: 1cm; right: 1cm; border-left: none; border-top: none; }
+
+        /* --- INFORMACIÓN SUPERIOR (COMO EL PDF) --- */
+        .info-superior {
+            text-align: center;
+            margin-bottom: 0.8cm;
+        }
+        .fundacion-nombre {
+            font-family: 'Playfair Display', serif;
+            font-size: 35px;
+            font-weight: 700;
+            color: #1a2a3a;
+            letter-spacing: 1px;
+            margin-bottom: 0.1cm;
+        }
+        .fundacion-detalles {
+            font-size: 12px;
+            color: #5a5a5a;
+            margin-bottom: 0.1cm;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        .datos-registro {
+            display: flex;
+            justify-content: center;
+            gap: 0.2cm;
+            font-size: 15px;
+            color: #b8860b;
+            font-weight: 600;
+            background: rgba(184, 134, 11, 0.05);
+            padding: 0.2cm 0.2cm;
+            border-radius: 30px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        /* --- BANDERAS DE PAÍSES --- */
+        .banderas-container {
+            display: flex;
+            justify-content: center;
+            margin: 0.1cm 0;
+        }
+        .banderas-paises {
+            display: flex;
+            gap: 0.2cm;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(184, 134, 11, 0.03);
+            padding: 0.2cm 0.2cm;
+            border-radius: 40px;
+            border: 1px solid #b8860b;
+        }
+        .banderas-paises img {
+            width: 28px;
+            height: 18px;
+            border-radius: 3px;
+            border: 1px solid #b8860b;
+            opacity: 0.9;
+        }
+
+        /* --- TÍTULO DEL CERTIFICADO --- */
+        .titulo-certificado {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: #1a2a3a;
+            text-align: center;
+            margin: 0.2cm 0 0.1cm;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        .subtitulo {
+            text-align: center;
+            font-size: 18px;
+            color: #b8860b;
+            margin-bottom: 0.7cm;
+            font-weight: 500;
+            font-style: italic;
+            border-bottom: 1px dashed #b8860b;
+            padding-bottom: 0.3cm;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .contenido {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .label {
+            font-size: 16px;
+            color: #5a5a5a;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.3cm;
+            text-transform: uppercase;
+        }
+        .nombre-artista {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a2a3a;
+            line-height: 1.2;
+            margin: 0.3cm 0;
+            border-bottom: 2px solid #b8860b;
+            border-top: 2px solid #b8860b;
+            display: inline-block;
+            padding: 0.3cm 1.5cm;
+            background: rgba(184, 134, 11, 0.02);
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .documento {
+            font-size: 18px;
+            color: #2c2c2c;
+            margin: 0.3cm 0;
+            font-weight: 500;
+        }
+        .documento strong {
+            color: #b8860b;
+            font-weight: 700;
+        }
+        .texto-participacion {
+            font-size: 15px;
+            color: #2c2c2c;
+            margin: 0.3cm auto;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        .texto-participacion strong {
+            color: #b8860b;
+            font-weight: 600;
+        }
+        .obra-doi {
+            background: rgba(184, 134, 11, 0.05);
+            padding: 0.4cm 0.8cm;
+            margin: 0.3cm auto;
+            max-width: 80%;
+            border-radius: 40px;
+            font-size: 14px;
+            border: 1px solid #b8860b;
+            color: #2c2c2c;
+        }
+        .obra-doi strong {
+            color: #b8860b;
+        }
+
+        /* --- FIRMA ELEGANTE (SIN RAYAS FALLAS) --- */
+        .firma {
+            margin-top: 0.3cm;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .linea-firma {
+            width: 8cm;
+            border-top: 1px solid #1a2a3a;
+            margin-bottom: 0.3cm;
+        }
+        .firma-cursiva {
+            font-family: 'Alex Brush', cursive;
+            font-size: 20px;
+            color: #1a2a3a;
+            margin-bottom: 0.1cm;
+            line-height: 0.9;
+            letter-spacing: 1px;
+        }
+        .nombre-firma {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 0.1cm;
+            letter-spacing: 1px;
+        }
+        .cargo-firma {
+            font-size: 14px;
+            color: #b8860b;
+            font-weight: 600;
+        }
+        .credenciales {
+            font-size: 11px;
+            color: #666;
+            margin-top: 0.2cm;
+            max-width: 90%;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* --- LOGOS EN LA PARTE INFERIOR --- */
+        .logos-inferiores {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.2cm;
+            padding-top: 0.2cm;
+            border-top: 1px solid #b8860b;
+        }
+        .logo-fundacion {
+            height: 2cm;
+            width: auto;
+            max-width: 2cm;
+            object-fit: contain;
+        }
+        .logo-revista {
+            height: 2cm;
+            width: auto;
+            max-width: 8cm;
+            object-fit: contain;
+        }
+
+        /* --- PIE DE PÁGINA (SIN CÓDIGO) --- */
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #888;
+            margin-top: 0.1cm;
+            margin-bottom: 0;
+        }
+
+        /* --- BOTONES DE ACCIÓN - SEPARADOS DEL DOCUMENTO --- */
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0 20px 0;  /* Margen superior e inferior aumentado */
+            padding: 15px 0;
+            background: transparent;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;  /* Espacio entre botones */
+            border-top: 1px dashed #b8860b;  /* Línea decorativa para separar visualmente */
+            padding-top: 25px;
+        }
+        .download-btn, .volver-btn {
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 50px;  /* Botones más redondeados */
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .download-btn {
+            background: #1a2a3a;
+            color: #fffcf5;
+            border: 1px solid #1a2a3a;
+        }
+        .download-btn:hover {
+            background: #b8860b;
+            border-color: #b8860b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(184, 134, 11, 0.3);
+        }
+        .volver-btn {
+            background: #ffffff;
+            color: #1a2a3a;
+            border: 1px solid #1a2a3a;
+        }
+        .volver-btn:hover {
+            background: #1a2a3a;
+            color: #fffcf5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL PARA CERTIFICADO + BOTONES --- */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- IMPRESIÓN PROFESIONAL - UNA SOLA HOJA --- */
+        @media print {
+            @page {
+                size: Letter;
+                margin: 0;
+            }
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                display: block;
+            }
+            .login-screen, .action-buttons {
+                display: none !important;
+            }
+            .certificado-container {
+                display: block !important;
+                box-shadow: none;
+                margin: 0;
+                width: 21cm;
+                height: 29.7cm;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+            .certificado {
+                height: 29.7cm;
+                width: 21cm;
+                padding: 1.5cm 2cm 1.2cm 2cm;
+                border: none;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE INGRESO -->
+    <div id="loginScreen" class="login-screen">
+        <h1>✦ CERTIFICADOS EDICIÓN 2 ✦</h1>
+        <p>Voces que Habitan el Territorio · 2026</p>
+        
+        <div class="input-group">
+            <label>NÚMERO DE DOCUMENTO</label>
+            <input type="text" id="documentoInput" class="login-input" placeholder="Ej: 1000886047" autocomplete="off">
+        </div>
+        
+        <div class="input-group">
+            <label>CÓDIGO DE VERIFICACIÓN (4 DÍGITOS)</label>
+            <input type="text" id="codigoInput" class="login-input" placeholder="Ej: 3742" maxlength="4" autocomplete="off">
+        </div>
+        
+        <button onclick="verificarYBuscar()" class="login-button">VER MI CERTIFICADO</button>
+        <div id="errorMsg" class="error-message">Documento o código incorrecto. Verifica e intenta nuevamente.</div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL (CERTIFICADO + BOTONES SEPARADOS) -->
+    <div id="mainContainer" class="main-container" style="display: none;">
+        <!-- CONTENEDOR DEL CERTIFICADO -->
+        <div id="certificadoContainer" class="certificado-container"></div>
+        
+        <!-- BOTONES DE ACCIÓN - SEPARADOS DEL CERTIFICADO -->
+        <div id="actionButtons" class="action-buttons">
+            <button onclick="window.print()" class="download-btn">🖨️ DESCARGAR CERTIFICADO (PDF)</button>
+            <button onclick="volverAlInicio()" class="volver-btn">← BUSCAR OTRO</button>
+        </div>
+    </div>
+
+    <script>
+        // --- BASE DE DATOS DE ARTISTAS (20) ---
+        const artistas = [
+            // ARTES VISUALES (14)
+            { doc: "1000886047", nombre: "KARINA PIEDRAHÍTA TABORDA", pais: "Colombia", codPais: "co",
+              documento: "C.C: 1000886047", obra: "“raíces”", tipoObra: "obra", doi: "10.5281/zenodo.18723742" },
+            { doc: "1020110073", nombre: "DIEGO CÁRDENAS HERNÁNDEZ", pais: "Colombia", codPais: "co",
+              documento: "C.C: 1020110073", obra: "“Tlahuelpuchi”, “La Dama en pena” y “Las vírgenes del destino”", tipoObra: "obras", doi: "10.5281/zenodo.18722983" },
+            { doc: "79141144", nombre: "LUIS GUILLERMO ROMERO", pais: "Colombia", codPais: "co",
+              documento: "C.C: 79141144", obra: "“silletas del Alma”, “fragmentos de sol” y “Portadoras de memoria”", tipoObra: "obras", doi: "10.5281/zenodo.18723410" },
+            { doc: "7698922", nombre: "EDWIN LÓPEZ FAJARDO", pais: "Colombia", codPais: "co",
+              documento: "C.C: 7698922", obra: "“Amazonas”, “Corcel” y “Sagrada familia”", tipoObra: "obras", doi: "10.5281/zenodo.18723535" },
+            { doc: "23610251", nombre: "LEIDY YOBANA NIÑO BARÓN", pais: "Colombia", codPais: "co",
+              documento: "C.C: 23610251", obra: "“Guacamayus”, “Un 25 de diciembre en Guacamayas” y “El hábitat de mi terruño”", tipoObra: "obras", doi: "10.5281/zenodo.18723210" },
+            { doc: "39678662", nombre: "MARÍA NOEL RABUÑAL CANTERO", pais: "Uruguay", codPais: "uy",
+              documento: "C.C: 39678662", obra: "“Ka'ajri”, “Ka'akupe” y “Jukupe”", tipoObra: "obras", doi: "10.5281/zenodo.18725630" },
+            { doc: "Av4181848", nombre: "LUISA AMANDA SOLANO MENDOZA", pais: "Nicaragua / Italia", codPais: "ni",
+              documento: "C.C: Av4181848", obra: "“Carnaval”, “Sueño Tropical” y “Pasión y Serenidad”", tipoObra: "obras", doi: "10.5281/zenodo.18725584" },
+            { doc: "43972541", nombre: "MILAGROS JUEZ – JUMII", pais: "Argentina", codPais: "ar",
+              documento: "DNI: 43972541", obra: "“La protección de un ángel”", tipoObra: "obra", doi: "10.5281/zenodo.18725145" },
+            { doc: "114140093", nombre: "RAFAEL ÁNGEL FONSECA HERRERA", pais: "Costa Rica", codPais: "cr",
+              documento: "C.C: 114140093", obra: "“Caminos de tierra”", tipoObra: "obra", doi: "10.5281/zenodo.18725033" },
+            { doc: "5057216", nombre: "RONALDO UNRUH SERVIN – LANTO'OY UNRUH", pais: "Paraguay", codPais: "py",
+              documento: "C.C: 5.057.216", obra: "“La llegada”, “Sevalaq Taalhay” y “Yanmaam”", tipoObra: "obras", doi: "10.5281/zenodo.18723802" },
+            { doc: "CSMRED91042817M400", nombre: "EDITH CASTREJÓN MARTÍNEZ – EDITH CASTMART", pais: "México", codPais: "mx",
+              documento: "INE: CSMRED91042817M400", obra: "“Xolo iluminado”, “Danza de alebrijes iluminados” y “Lele, Lele, Lele”", tipoObra: "obras", doi: "10.5281/zenodo.18723682" },
+            { doc: "HRCRRC01042027H400", nombre: "RICARDO HERNÁNDEZ CRUZ", pais: "México", codPais: "mx",
+              documento: "INE: HRCRRC01042027H400", obra: "“Que hermosa vista”", tipoObra: "obra", doi: "10.5281/zenodo.18723615" },
+            { doc: "9079162", nombre: "CHRISTIAN SCHRADER VALENCIA", pais: "Colombia", codPais: "co",
+              documento: "C.C: 9079162", obra: "“Guernica en neón”, “Quijotadas” y “Ya ves – 'Tiene los ojos de su padre'”", tipoObra: "obras", doi: "10.5281/zenodo.18726273" },
+            { doc: "31710778", nombre: "YOBANA OROZCO BENAVIDES", pais: "Colombia", codPais: "co",
+              documento: "C.C: 31710778", obra: "“Raíces que se Abrazan” y “Cacique Calima – Memoria y Resplandor Ancestral”", tipoObra: "obras", doi: "10.5281/zenodo.18723469" },
+            // LITERATURA (6)
+            { doc: "24289053", nombre: "RICARDO JAVIER VILLALBA", pais: "Argentina", codPais: "ar",
+              documento: "C.C: 24289053", obra: "“Rumün Rankül – Rescoldo Ranquel”", tipoObra: "obra literaria", doi: "10.5281/zenodo.18722769" },
+            { doc: "47596956", nombre: "ANTHONY JOSUÉ FLORES REYES", pais: "Perú", codPais: "pe",
+              documento: "DNI: 47596956", obra: "“MI CONSENTIDA”", tipoObra: "obra poética", doi: "10.5281/zenodo.18723078" },
+            { doc: "3033054", nombre: "MANOLO ROMERO JUANCITO", pais: "Paraguay", codPais: "py",
+              documento: "C.C: 3033054", obra: "“El monte no olvida” (traducción del relato ancestral)", tipoObra: "obra de traducción", doi: "10.5281/zenodo.18723137" },
+            { doc: "3650876", nombre: "ROSA BEATRIZ LÓPEZ CHAPPARRO", pais: "Paraguay", codPais: "py",
+              documento: "C.C: 3.650.876", obra: "“Mujeres del Chaco: guardianas de frutos silvestres, saberes ancestrales y gastronomía local”", tipoObra: "artículo de investigación", doi: "10.5281/zenodo.18725862" },
+            { doc: "05706785", nombre: "LYDIA LUCIA NUNES DE SOUSA", pais: "Brasil", codPais: "br",
+              documento: "C.C: 0570678-5", obra: "“Curso de Eventos: Una Experiencia Pedagógica Cultural en el Colectivo”", tipoObra: "artículo académico", doi: "10.5281/zenodo.18725714" },
+            { doc: "1130589992", nombre: "JHONATHAN GIUSSEPPE BOLAÑOS MUÑOZ", pais: "Colombia", codPais: "co",
+              documento: "C.C: 1130589992", obra: "“Habitar el territorio desde el cine” (entrevista)", tipoObra: "entrevista", doi: "10.5281/zenodo.18725831" }
+        ];
+
+        function generarHTMLCertificado(artista) {
+            const paises = [
+                { codigo: 'co', nombre: 'COL' }, { codigo: 'uy', nombre: 'URU' }, { codigo: 'ni', nombre: 'NIC' },
+                { codigo: 'it', nombre: 'ITA' }, { codigo: 'ar', nombre: 'ARG' }, { codigo: 'cr', nombre: 'CRI' },
+                { codigo: 'py', nombre: 'PAR' }, { codigo: 'mx', nombre: 'MEX' }, { codigo: 'pe', nombre: 'PER' },
+                { codigo: 'br', nombre: 'BRA' }
+            ];
+            const banderasHtml = paises.map(p => 
+                `<img src="https://flagcdn.com/w320/${p.codigo}.png" alt="${p.nombre}" title="${p.nombre}">`
+            ).join('');
+
+            const textoParticipacion = artista.tipoObra.includes('obra') || artista.tipoObra === 'obras' 
+                ? `Ha participado activamente como <strong>artista colaborador(a)</strong> en esta publicación internacional, con la siguiente ${artista.tipoObra === 'obra' ? 'obra' : 'obras'}:`
+                : `Ha participado activamente como <strong>autor(a) colaborador(a)</strong> en esta publicación internacional, con el siguiente ${artista.tipoObra}:`;
+
+            return `
+                <div class="certificado">
+                    <div class="esquina esquina-tl"></div>
+                    <div class="esquina esquina-tr"></div>
+                    <div class="esquina esquina-bl"></div>
+                    <div class="esquina esquina-br"></div>
+
+                    <div class="info-superior">
+                        <div class="fundacion-nombre">FUNDACIÓN ARTES MULTICAP</div>
+                        <div class="fundacion-detalles">NIT: 31710778-0 · Matrícula No.: 1220672-2 – Cámara de Comercio de Cali</div>
+                        <div class="datos-registro">
+                            <span>ISSN: 3114-9871</span>
+                            <span>DOI: 10.5281/zenodo.18688664</span>
+                            <span>Cali, Colombia</span>
+                        </div>
+                    </div>
+
+                    <div class="banderas-container">
+                        <div class="banderas-paises">${banderasHtml}</div>
+                    </div>
+
+                    <div class="titulo-certificado">CERTIFICADO DE PARTICIPACIÓN</div>
+                    <div class="subtitulo">“Voces que Habitan el Territorio” · Edición N.º 2 · 2026</div>
+
+                    <div class="contenido">
+                        <div class="label">La Fundación Artes Multicap certifica que:</div>
+                        <div class="nombre-artista">${artista.nombre}</div>
+                        <div class="documento">
+                            <strong>${artista.documento}</strong> · <strong>País:</strong> ${artista.pais}
+                        </div>
+                        <div class="texto-participacion">${textoParticipacion}</div>
+                        <div class="obra-doi">
+                            <strong>${artista.obra}</strong><br>
+                            <span style="font-family: monospace;">DOI: ${artista.doi}</span>
+                        </div>
+                    </div>
+
+                    <div class="firma">
+                        <div class="firma-cursiva">Yobana Orozco Benavides</div>
+                        <div class="linea-firma"></div>
+                        <div class="nombre-firma">YOBANA OROZCO BENAVIDES</div>
+                        <div class="cargo-firma">Representante Legal · Fundación Artes Multicap</div>
+                        <div class="credenciales">
+                            Gestora Cultural nacional e internacional · Registro Único de Agentes Culturales – MinCultura<br>
+                            Agente Cultural inscrita en el Mapa IberCultura Viva – SEGIB (ID 670813)
+                        </div>
+                    </div>
+
+                    <div class="logos-inferiores">
+                        <img src="https://i.postimg.cc/jjZ7mqJB/480702220-618041787505911-8280549859336367380-n.jpg" alt="Fundación Artes Multicap" class="logo-fundacion">
+                        <img src="https://i.postimg.cc/4NjxHQ4y/Whats-App-Image-2025-06-27-at-9.jpg" alt="Revista Explorando Arte y Cultura" class="logo-revista">
+                    </div>
+
+                    <div class="footer">
+                        En Colombia, a 18 de febrero de 2026 · Publicación oficial
+                    </div>
+                </div>
+            `;
+        }
+
+        function verificarYBuscar() {
+            const docInput = document.getElementById('documentoInput').value.trim().replace(/\s+/g, '');
+            const codInput = document.getElementById('codigoInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            const artista = artistas.find(a => a.doc.replace(/\s+/g, '') === docInput);
+            
+            if (artista) {
+                const ultimos4 = artista.doi.slice(-4);
+                if (codInput === ultimos4) {
+                    errorMsg.style.display = 'none';
+                    document.getElementById('loginScreen').style.display = 'none';
+                    
+                    // Mostrar el contenedor principal
+                    const mainContainer = document.getElementById('mainContainer');
+                    mainContainer.style.display = 'flex';
+                    
+                    // Generar el certificado en el contenedor
+                    const container = document.getElementById('certificadoContainer');
+                    container.style.display = 'block';
+                    container.innerHTML = generarHTMLCertificado(artista);
+                    
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function volverAlInicio() {
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('certificadoContainer').innerHTML = '';
+            document.getElementById('documentoInput').value = '';
+            document.getElementById('codigoInput').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        document.getElementById('codigoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verificarYBuscar();
+        });
+    </script>
+</body>
+</html>
