@@ -155,7 +155,7 @@
         /* --- INFORMACIÓN SUPERIOR (COMO EL PDF) --- */
         .info-superior {
             text-align: center;
-            margin-bottom: 0.8cm;
+            margin-bottom: 0.1cm;
         }
         .fundacion-nombre {
             font-family: 'Playfair Display', serif;
@@ -190,7 +190,7 @@
         .banderas-container {
             display: flex;
             justify-content: center;
-            margin: 0.1cm 0;
+            margin: 1cm 0;
         }
         .banderas-paises {
             display: flex;
@@ -213,7 +213,7 @@
         /* --- TÍTULO DEL CERTIFICADO --- */
         .titulo-certificado {
             font-family: 'Playfair Display', serif;
-            font-size: 34px;
+            font-size: 37px;
             font-weight: 800;
             color: #1a2a3a;
             text-align: center;
@@ -225,7 +225,7 @@
             text-align: center;
             font-size: 18px;
             color: #b8860b;
-            margin-bottom: 0.7cm;
+            margin-bottom: 2cm;
             font-weight: 500;
             font-style: italic;
             border-bottom: 1px dashed #b8860b;
@@ -298,56 +298,62 @@
             color: #b8860b;
         }
 
-        /* --- FIRMA ELEGANTE (SIN RAYAS FALLAS) --- */
-        .firma {
-            margin-top: 0.3cm;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .linea-firma {
-            width: 8cm;
-            border-top: 1px solid #1a2a3a;
-            margin-bottom: 0.3cm;
-        }
-        .firma-cursiva {
-            font-family: 'Alex Brush', cursive;
-            font-size: 20px;
-            color: #1a2a3a;
-            margin-bottom: 0.1cm;
-            line-height: 0.9;
-            letter-spacing: 1px;
-        }
-        .nombre-firma {
-            font-family: 'Playfair Display', serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a2a3a;
-            margin-bottom: 0.1cm;
-            letter-spacing: 1px;
-        }
-        .cargo-firma {
-            font-size: 14px;
-            color: #b8860b;
-            font-weight: 600;
-        }
-        .credenciales {
-            font-size: 11px;
-            color: #666;
-            margin-top: 0.2cm;
-            max-width: 90%;
-            text-align: center;
-            line-height: 1.4;
-        }
+       /* --- FIRMA ELEGANTE --- */
+.firma-imagen {
+    margin-bottom: 0.05cm;
+}
+.firma-imagen img {
+    height: 20px; /* CAMBIADO A 20px - MÁS PEQUEÑA */
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
 
+.firma {
+    margin-top: 0.3cm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.linea-firma {
+    width: 4.5cm;
+    border-top: 1px solid #1a2a3a;
+    margin-bottom: 0.3cm;
+}
+
+.nombre-firma {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a2a3a;
+    margin-bottom: 0.1cm;
+    letter-spacing: 1px;
+}
+
+.cargo-firma {
+    font-size: 14px;
+    color: #b8860b;
+    font-weight: 600;
+}
+
+.credenciales {
+    font-size: 11px;
+    color: #666;
+    margin-top: 0.2cm;
+    max-width: 90%;
+    text-align: center;
+    line-height: 1.5;
+}
+       
         /* --- LOGOS EN LA PARTE INFERIOR --- */
         .logos-inferiores {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 0.2cm;
+            margin-top: 0cm;
             padding-top: 0.2cm;
-            border-top: 1px solid #b8860b;
+            
         }
         .logo-fundacion {
             height: 2cm;
@@ -365,10 +371,10 @@
         /* --- PIE DE PÁGINA (SIN CÓDIGO) --- */
         .footer {
             text-align: center;
-            font-size: 10px;
+            font-size: 12px;
             color: #888;
-            margin-top: 0.1cm;
-            margin-bottom: 0;
+            
+            
         }
 
         /* --- BOTONES DE ACCIÓN - SEPARADOS DEL DOCUMENTO --- */
@@ -450,9 +456,9 @@
                 page-break-inside: avoid;
             }
             .certificado {
-                height: 29.7cm;
+                height: 27.8cm;
                 width: 21cm;
-                padding: 1.5cm 2cm 1.2cm 2cm;
+                padding: 1cm 1cm 1cm 1cm;
                 border: none;
                 page-break-after: avoid;
                 page-break-inside: avoid;
@@ -572,12 +578,13 @@
                         </div>
                     </div>
 
-                    <div class="banderas-container">
+                      <div class="banderas-container">
                         <div class="banderas-paises">${banderasHtml}</div>
-                    </div>
+                     </div>
+                   
 
                     <div class="titulo-certificado">CERTIFICADO DE PARTICIPACIÓN</div>
-                    <div class="subtitulo">“Voces que Habitan el Territorio” · Edición N.º 2 · 2026</div>
+                    <div class="subtitulo">“Voces que Habitan el Territorio” · Edición N.º 2 · 2026<br>
 
                     <div class="contenido">
                         <div class="label">La Fundación Artes Multicap certifica que:</div>
@@ -591,27 +598,32 @@
                             <span style="font-family: monospace;">DOI: ${artista.doi}</span>
                         </div>
                     </div>
+                   
+                    <!-- --- FIRMA ELEGANTE (SIN RAYAS FALLAS) --- -->
+<div class="firma">
+    <!-- ESTA PARTE ES LA QUE CAMBIAMOS CON TU NUEVA IMAGEN -->
+    <div class="firma-imagen">
+        <img src="https://fontmeme.com/permalink/260222/80a14540.png" alt="Firma artística personalizada" style="height: 30px; width: auto; display: block; margin: 0 auto;">
+    </div>
+    <div class="linea-firma"></div>
+    <div class="nombre-firma">YOBANA OROZCO BENAVIDES</div>
+    <div class="cargo-firma">Representante Legal · Fundación Artes Multicap</div>
+    <div class="credenciales">
+        Gestora Cultural nacional e internacional · Registro Único de Agentes Culturales – MinCultura<br>
+        Agente Cultural inscrita en el Mapa IberCultura Viva – SEGIB (ID 670813)
+    </div>
+</div>
 
-                    <div class="firma">
-                        <div class="firma-cursiva">Yobana Orozco Benavides</div>
-                        <div class="linea-firma"></div>
-                        <div class="nombre-firma">YOBANA OROZCO BENAVIDES</div>
-                        <div class="cargo-firma">Representante Legal · Fundación Artes Multicap</div>
-                        <div class="credenciales">
-                            Gestora Cultural nacional e internacional · Registro Único de Agentes Culturales – MinCultura<br>
-                            Agente Cultural inscrita en el Mapa IberCultura Viva – SEGIB (ID 670813)
+<div class=
+                        En Colombia, a 18 de febrero de 2026 · Publicación oficial<br>
                         </div>
-                    </div>
-
+                       
                     <div class="logos-inferiores">
                         <img src="https://i.postimg.cc/jjZ7mqJB/480702220-618041787505911-8280549859336367380-n.jpg" alt="Fundación Artes Multicap" class="logo-fundacion">
                         <img src="https://i.postimg.cc/4NjxHQ4y/Whats-App-Image-2025-06-27-at-9.jpg" alt="Revista Explorando Arte y Cultura" class="logo-revista">
-                    </div>
+                   </div>
+                   </div>
 
-                    <div class="footer">
-                        En Colombia, a 18 de febrero de 2026 · Publicación oficial
-                    </div>
-                </div>
             `;
         }
 
