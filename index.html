@@ -105,7 +105,7 @@
         .certificado-container {
             width: 21cm;
             min-height: 29.7cm;
-            margin: 5px auto 20px auto;  /* Margen inferior aumentado para separar de botones */
+            margin: 5px auto 20px auto;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
             display: none;
             background: #ffffff;
@@ -299,52 +299,52 @@
         }
 
        /* --- FIRMA ELEGANTE --- */
-.firma-imagen {
-    margin-bottom: 0.05cm;
-}
-.firma-imagen img {
-    height: 20px; /* CAMBIADO A 20px - MÁS PEQUEÑA */
-    width: auto;
-    display: block;
-    margin: 0 auto;
-}
+        .firma-imagen {
+            margin-bottom: 0.05cm;
+        }
+        .firma-imagen img {
+            height: 20px;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+        }
 
-.firma {
-    margin-top: 0.3cm;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .firma {
+            margin-top: 0.3cm;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.linea-firma {
-    width: 4.5cm;
-    border-top: 1px solid #1a2a3a;
-    margin-bottom: 0.3cm;
-}
+        .linea-firma {
+            width: 4.5cm;
+            border-top: 1px solid #1a2a3a;
+            margin-bottom: 0.3cm;
+        }
 
-.nombre-firma {
-    font-family: 'Playfair Display', serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1a2a3a;
-    margin-bottom: 0.1cm;
-    letter-spacing: 1px;
-}
+        .nombre-firma {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 0.1cm;
+            letter-spacing: 1px;
+        }
 
-.cargo-firma {
-    font-size: 14px;
-    color: #b8860b;
-    font-weight: 600;
-}
+        .cargo-firma {
+            font-size: 14px;
+            color: #b8860b;
+            font-weight: 600;
+        }
 
-.credenciales {
-    font-size: 11px;
-    color: #666;
-    margin-top: 0.2cm;
-    max-width: 90%;
-    text-align: center;
-    line-height: 1.5;
-}
+        .credenciales {
+            font-size: 11px;
+            color: #666;
+            margin-top: 0.2cm;
+            max-width: 90%;
+            text-align: center;
+            line-height: 1.5;
+        }
        
         /* --- LOGOS EN LA PARTE INFERIOR --- */
         .logos-inferiores {
@@ -353,7 +353,6 @@
             align-items: center;
             margin-top: 0cm;
             padding-top: 0.2cm;
-            
         }
         .logo-fundacion {
             height: 2cm;
@@ -368,33 +367,31 @@
             object-fit: contain;
         }
 
-        /* --- PIE DE PÁGINA (SIN CÓDIGO) --- */
+        /* --- PIE DE PÁGINA --- */
         .footer {
             text-align: center;
             font-size: 12px;
             color: #888;
-            
-            
         }
 
-        /* --- BOTONES DE ACCIÓN - SEPARADOS DEL DOCUMENTO --- */
+        /* --- BOTONES DE ACCIÓN --- */
         .action-buttons {
             text-align: center;
-            margin: 30px 0 20px 0;  /* Margen superior e inferior aumentado */
+            margin: 30px 0 20px 0;
             padding: 15px 0;
             background: transparent;
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 20px;  /* Espacio entre botones */
-            border-top: 1px dashed #b8860b;  /* Línea decorativa para separar visualmente */
+            gap: 20px;
+            border-top: 1px dashed #b8860b;
             padding-top: 25px;
         }
         .download-btn, .volver-btn {
             padding: 12px 30px;
             font-size: 14px;
             font-weight: 500;
-            border-radius: 50px;  /* Botones más redondeados */
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
             border: none;
@@ -475,12 +472,14 @@
         
         <div class="input-group">
             <label>NÚMERO DE DOCUMENTO</label>
-            <input type="text" id="documentoInput" class="login-input" placeholder="Ej: 1000886047" autocomplete="off">
+            <!-- CAMBIO: type="password" para ocultar el número de documento -->
+            <input type="password" id="documentoInput" class="login-input" placeholder="••••••••" autocomplete="off">
         </div>
         
         <div class="input-group">
             <label>CÓDIGO DE VERIFICACIÓN (4 DÍGITOS)</label>
-            <input type="text" id="codigoInput" class="login-input" placeholder="Ej: 3742" maxlength="4" autocomplete="off">
+            <!-- CAMBIO: type="password" para ocultar los dígitos -->
+            <input type="password" id="codigoInput" class="login-input" placeholder="••••" maxlength="4" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
         </div>
         
         <button onclick="verificarYBuscar()" class="login-button">VER MI CERTIFICADO</button>
@@ -578,10 +577,9 @@
                         </div>
                     </div>
 
-                      <div class="banderas-container">
+                    <div class="banderas-container">
                         <div class="banderas-paises">${banderasHtml}</div>
-                     </div>
-                   
+                    </div>
 
                     <div class="titulo-certificado">CERTIFICADO DE PARTICIPACIÓN</div>
                     <div class="subtitulo">“Voces que Habitan el Territorio” · Edición N.º 2 · 2026<br>
@@ -599,31 +597,29 @@
                         </div>
                     </div>
                    
-                    <!-- --- FIRMA ELEGANTE (SIN RAYAS FALLAS) --- -->
-<div class="firma">
-    <!-- ESTA PARTE ES LA QUE CAMBIAMOS CON TU NUEVA IMAGEN -->
-    <div class="firma-imagen">
-        <img src="https://fontmeme.com/permalink/260222/80a14540.png" alt="Firma artística personalizada" style="height: 30px; width: auto; display: block; margin: 0 auto;">
-    </div>
-    <div class="linea-firma"></div>
-    <div class="nombre-firma">YOBANA OROZCO BENAVIDES</div>
-    <div class="cargo-firma">Representante Legal · Fundación Artes Multicap</div>
-    <div class="credenciales">
-        Gestora Cultural nacional e internacional · Registro Único de Agentes Culturales – MinCultura<br>
-        Agente Cultural inscrita en el Mapa IberCultura Viva – SEGIB (ID 670813)
-    </div>
-</div>
-
-<div class=
-                        En Colombia, a 18 de febrero de 2026 · Publicación oficial<br>
+                    <!-- FIRMA ELEGANTE -->
+                    <div class="firma">
+                        <div class="firma-imagen">
+                            <img src="https://fontmeme.com/permalink/260222/80a14540.png" alt="Firma artística personalizada" style="height: 30px; width: auto; display: block; margin: 0 auto;">
                         </div>
+                        <div class="linea-firma"></div>
+                        <div class="nombre-firma">YOBANA OROZCO BENAVIDES</div>
+                        <div class="cargo-firma">Representante Legal · Fundación Artes Multicap</div>
+                        <div class="credenciales">
+                            Gestora Cultural nacional e internacional · Registro Único de Agentes Culturales – MinCultura<br>
+                            Agente Cultural inscrita en el Mapa IberCultura Viva – SEGIB (ID 670813)
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        En Colombia, a 18 de febrero de 2026 · Publicación oficial
+                    </div>
                        
                     <div class="logos-inferiores">
                         <img src="https://i.postimg.cc/jjZ7mqJB/480702220-618041787505911-8280549859336367380-n.jpg" alt="Fundación Artes Multicap" class="logo-fundacion">
                         <img src="https://i.postimg.cc/4NjxHQ4y/Whats-App-Image-2025-06-27-at-9.jpg" alt="Revista Explorando Arte y Cultura" class="logo-revista">
-                   </div>
-                   </div>
-
+                    </div>
+                </div>
             `;
         }
 
