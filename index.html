@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificado de Participación - Edición 2</title>
+    <title>Certificado de Participación - Revista Explorando Arte</title>
     <style>
         /* ESTILOS ELEGANTES - BASADO EN TU PDF */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap');
@@ -61,7 +61,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .login-input {
+        .login-input, .login-select {
             width: 100%;
             padding: 14px;
             font-size: 16px;
@@ -71,10 +71,17 @@
             color: #1a2a3a;
             outline: none;
             transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            appearance: none;
+            -webkit-appearance: none;
         }
-        .login-input:focus {
+        .login-input:focus, .login-select:focus {
             border-color: #b8860b;
             box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+        }
+        .login-select {
+            cursor: pointer;
+            text-align: center;
         }
         .login-button {
             background: #b8860b;
@@ -99,6 +106,30 @@
             font-size: 14px;
             display: none;
             font-weight: 500;
+        }
+
+        /* --- BOTÓN PÁGINA PRINCIPAL --- */
+        .btn-pagina-principal {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: #1a2a3a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+            width: 100%;
+            text-align: center;
+        }
+        .btn-pagina-principal:hover {
+            background: #b8860b;
+            transform: translateY(-2px);
         }
 
         /* --- CONTENEDOR DEL CERTIFICADO (TAMAÑO CARTA EXACTO) --- */
@@ -467,23 +498,35 @@
 
     <!-- PANTALLA DE INGRESO -->
     <div id="loginScreen" class="login-screen">
-        <h1>✦ CERTIFICADOS EDICIÓN 2 ✦</h1>
-        <p>Voces que Habitan el Territorio · 2026</p>
+        <h1>✦ CERTIFICADOS ✦</h1>
+        <p>Revista Explorando Arte y Cultura de Latinoamérica</p>
         
         <div class="input-group">
+            <label>EDICIÓN</label>
+            <select id="edicionSelect" class="login-select">
+                <option value="">-- Selecciona la edición --</option>
+                <option value="1">Edición 1 - 2025</option>
+                <option value="2">Edición 2 - 2026</option>
+            </select>
+        </div>
+
+        <div class="input-group">
             <label>NÚMERO DE DOCUMENTO</label>
-            <!-- CAMBIO: type="password" para ocultar el número de documento -->
             <input type="password" id="documentoInput" class="login-input" placeholder="••••••••" autocomplete="off">
         </div>
         
         <div class="input-group">
             <label>CÓDIGO DE VERIFICACIÓN (4 DÍGITOS)</label>
-            <!-- CAMBIO: type="password" para ocultar los dígitos -->
             <input type="password" id="codigoInput" class="login-input" placeholder="••••" maxlength="4" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
         </div>
         
         <button onclick="verificarYBuscar()" class="login-button">VER MI CERTIFICADO</button>
         <div id="errorMsg" class="error-message">Documento o código incorrecto. Verifica e intenta nuevamente.</div>
+        
+        <!-- Botón para ir a la página principal -->
+        <a href="https://explorandomuseosyartelatinoamericano.netlify.app/" target="_blank" class="btn-pagina-principal">
+            🌐 Ir a la página principal
+        </a>
     </div>
 
     <!-- CONTENEDOR PRINCIPAL (CERTIFICADO + BOTONES SEPARADOS) -->
@@ -499,8 +542,19 @@
     </div>
 
     <script>
-        // --- BASE DE DATOS DE ARTISTAS (20) ---
-        const artistas = [
+        // ============================================================
+        // BASE DE DATOS - EDICIÓN 1 (ARTISTAS)
+        // ============================================================
+        const artistasEdicion1 = [
+            // Aquí se agregarán los artistas de la Edición 1
+            // Ejemplo: { doc: "123456789", nombre: "ARTISTA EJEMPLO", pais: "Colombia", codPais: "co",
+            //   documento: "C.C: 123456789", obra: "“Obra ejemplo”", tipoObra: "obra", doi: "10.5281/zenodo.XXXXXXXX" }
+        ];
+
+        // ============================================================
+        // BASE DE DATOS - EDICIÓN 2 (ARTISTAS) - COMPLETA Y SIN CAMBIOS
+        // ============================================================
+        const artistasEdicion2 = [
             // ARTES VISUALES (14)
             { doc: "1000886047", nombre: "KARINA PIEDRAHÍTA TABORDA", pais: "Colombia", codPais: "co",
               documento: "C.C: 1000886047", obra: "“raíces”", tipoObra: "obra", doi: "10.5281/zenodo.18722769" },
@@ -532,10 +586,8 @@
             { doc: "5057216", nombre: "RONALDO UNRUH SERVIN – LANTO'OY UNRUH", pais: "Paraguay", codPais: "py",
               documento: "C.C: 5.057.216", obra: "“La llegada”, “Sevalaq Taalhay” y “Yanmaam”", tipoObra: "obras", doi: "10.5281/zenodo.18723802" },
           
-          
             { doc: "CSMRED91042817M400", nombre: "EDITH CASTREJÓN MARTÍNEZ – EDITH CASTMART", pais: "México", codPais: "mx",
               documento: "INE: CSMRED91042817M400", obra: "“Xolo iluminado”, “Danza de alebrijes iluminados” y “Lele, Lele, Lele”", tipoObra: "obras", doi: "10.5281/zenodo.18723742" },
-          
           
             { doc: "HRCRRC01042027H400", nombre: "RICARDO HERNÁNDEZ CRUZ", pais: "México", codPais: "mx",
               documento: "INE: HRCRRC01042027H400", obra: "“Que hermosa vista”", tipoObra: "obra", doi: "10.5281/zenodo.18723802" },
@@ -566,7 +618,11 @@
               documento: "C.C: 1130589992", obra: "“Habitar el territorio desde el cine” (entrevista)", tipoObra: "entrevista", doi: "10.5281/zenodo.18726273" }
         ];
 
-        function generarHTMLCertificado(artista) {
+        // ============================================================
+        // FUNCIÓN PARA GENERAR HTML DEL CERTIFICADO
+        // ============================================================
+
+        function generarHTMLCertificado(artista, edicion) {
             const paises = [
                 { codigo: 'co', nombre: 'COL' }, { codigo: 'uy', nombre: 'URU' }, { codigo: 'ni', nombre: 'NIC' },
                 { codigo: 'it', nombre: 'ITA' }, { codigo: 'ar', nombre: 'ARG' }, { codigo: 'cr', nombre: 'CRI' },
@@ -581,6 +637,10 @@
                 ? `Ha participado activamente como <strong>artista colaborador(a)</strong> en esta publicación internacional, con la siguiente ${artista.tipoObra === 'obra' ? 'obra' : 'obras'}:`
                 : `Ha participado activamente como <strong>autor(a) colaborador(a)</strong> en esta publicación internacional, con el/la siguiente ${artista.tipoObra}:`;
 
+            const tituloEdicion = edicion === '1' ? 'Edición N.º 1 · 2025' : 'Edición N.º 2 · 2026';
+            const subtituloTema = edicion === '1' ? '“Libre (Explosión Creativa en América Latina)”' : '“Voces que Habitan el Territorio”';
+            const fechaCertificado = edicion === '1' ? '22 de octubre de 2025' : '18 de febrero de 2026';
+
             return `
                 <div class="certificado">
                     <div class="esquina esquina-tl"></div>
@@ -593,7 +653,7 @@
                         <div class="fundacion-detalles">NIT: 31710778-0 · Matrícula No.: 1220672-2 – Cámara de Comercio de Cali</div>
                         <div class="datos-registro">
                             <span>ISSN: 3114-9871</span>
-                            <span>DOI: 10.5281/zenodo.18749408</span>
+                            <span>DOI: ${artista.doi}</span>
                             <span>Cali, Colombia</span>
                         </div>
                     </div>
@@ -603,7 +663,7 @@
                     </div>
 
                     <div class="titulo-certificado">CERTIFICADO DE PARTICIPACIÓN</div>
-                    <div class="subtitulo">“Voces que Habitan el Territorio” · Edición N.º 2 · 2026<br>
+                    <div class="subtitulo">${subtituloTema} · ${tituloEdicion}</div>
 
                     <div class="contenido">
                         <div class="label">La Fundación Artes Multicap certifica que:</div>
@@ -633,7 +693,7 @@
                     </div>
 
                     <div class="footer">
-                        En Colombia, a 18 de febrero de 2026 · Publicación oficial
+                        En Colombia, a ${fechaCertificado} · Publicación oficial
                     </div>
                        
                     <div class="logos-inferiores">
@@ -644,35 +704,70 @@
             `;
         }
 
+        // ============================================================
+        // FUNCIÓN PRINCIPAL - VERIFICAR Y BUSCAR
+        // ============================================================
+
         function verificarYBuscar() {
+            const edicion = document.getElementById('edicionSelect').value;
             const docInput = document.getElementById('documentoInput').value.trim().replace(/\s+/g, '');
             const codInput = document.getElementById('codigoInput').value.trim();
             const errorMsg = document.getElementById('errorMsg');
             
+            errorMsg.style.display = 'none';
+
+            if (!edicion) {
+                errorMsg.textContent = 'Por favor selecciona una edición.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            if (!docInput || !codInput) {
+                errorMsg.textContent = 'Por favor ingresa tu documento y el código de verificación.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            // Seleccionar la base de datos según la edición
+            let artistas = edicion === '1' ? artistasEdicion1 : artistasEdicion2;
+            
+            if (artistas.length === 0 && edicion === '1') {
+                errorMsg.textContent = 'Próximamente disponible la Edición 1.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
             const artista = artistas.find(a => a.doc.replace(/\s+/g, '') === docInput);
             
-            if (artista) {
-                const ultimos4 = artista.doi.slice(-4);
-                if (codInput === ultimos4) {
-                    errorMsg.style.display = 'none';
-                    document.getElementById('loginScreen').style.display = 'none';
-                    
-                    // Mostrar el contenedor principal
-                    const mainContainer = document.getElementById('mainContainer');
-                    mainContainer.style.display = 'flex';
-                    
-                    // Generar el certificado en el contenedor
-                    const container = document.getElementById('certificadoContainer');
-                    container.style.display = 'block';
-                    container.innerHTML = generarHTMLCertificado(artista);
-                    
-                } else {
-                    errorMsg.style.display = 'block';
-                }
-            } else {
+            if (!artista) {
+                errorMsg.textContent = 'Documento no encontrado en esta edición.';
                 errorMsg.style.display = 'block';
+                return;
             }
+
+            // Verificar código (últimos 4 dígitos del DOI)
+            const ultimos4 = artista.doi.slice(-4);
+            if (codInput !== ultimos4) {
+                errorMsg.textContent = 'Código de verificación incorrecto.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            // Mostrar el certificado
+            errorMsg.style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'none';
+            
+            const mainContainer = document.getElementById('mainContainer');
+            mainContainer.style.display = 'flex';
+            
+            const container = document.getElementById('certificadoContainer');
+            container.style.display = 'block';
+            container.innerHTML = generarHTMLCertificado(artista, edicion);
         }
+
+        // ============================================================
+        // FUNCIÓN VOLVER AL INICIO
+        // ============================================================
 
         function volverAlInicio() {
             document.getElementById('loginScreen').style.display = 'block';
@@ -683,7 +778,15 @@
             document.getElementById('errorMsg').style.display = 'none';
         }
 
+        // ============================================================
+        // EVENTOS DE TECLADO
+        // ============================================================
+
         document.getElementById('codigoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verificarYBuscar();
+        });
+
+        document.getElementById('documentoInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') verificarYBuscar();
         });
     </script>
